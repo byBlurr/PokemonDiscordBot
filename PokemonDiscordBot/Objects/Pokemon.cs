@@ -2,6 +2,7 @@
 using PokemonDiscordBot.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace PokemonDiscordBot.Objects
@@ -82,7 +83,7 @@ namespace PokemonDiscordBot.Objects
 
         // Evolution
         [JsonProperty("evo.to")]
-        public string EvolveTo { get; set; } // String because some have multiple, need to turn into int[] but this needs to be done in data file first
+        public string EvolveToText { get; set; } // String because some have multiple, need to turn into int[] but this needs to be done in data file first
 
         [JsonProperty("evo.from")]
         public int EvolveFrom { get; set; }
@@ -95,5 +96,30 @@ namespace PokemonDiscordBot.Objects
 
         [JsonProperty("evo.mega_y")]
         public int EvolveMegaY { get; set; }
+
+        public string Image => Path.Combine(AppContext.BaseDirectory, "Images", "Reg", Id + ".png");
+        public string ImageShiny => Path.Combine(AppContext.BaseDirectory, "Images", "Shiny", Id + ".png");
+        public int[] EvolveTo()
+        {
+            string[] evolveTos = EvolveToText.Split(' ');
+            int[] evolveTo = new int[evolveTos.Length];
+
+            try
+            {
+                for (int i = 0; i < evolveTos.Length; i++)
+                {
+                    if (!String.IsNullOrEmpty(evolveTos[i]))
+                    {
+                        evolveTo[i] = int.Parse(evolveTos[i]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return evolveTo;
+        }
     }
 }

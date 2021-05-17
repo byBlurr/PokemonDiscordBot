@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PokemonDiscordBot.Entities;
+using PokemonDiscordBot.Objects;
+using System;
+using System.IO;
 
 namespace PokemonDiscordBot
 {
@@ -6,7 +10,9 @@ namespace PokemonDiscordBot
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Load all pokemon ig...");
+
+            Pokemons.Init();
         }
     }
 }
